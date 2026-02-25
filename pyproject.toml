@@ -8,10 +8,14 @@ authors = [
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "pytest"
 ]
 
 [tool.poetry]
 packages = [{include = "logtest", from = "src"}]
+
+[project.scripts]
+main = "logtest.main:main"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
