@@ -19,11 +19,19 @@ operators = {
 
 class Tokenizer:
     def __init__(self) -> None:
-        self.input = Peekable([])
-        self.output = []
+        self._input = Peekable([])
+        self._output = []
+
+        self._operator_lengths = list({len(key) for key in operators}).sorted(reverse=True)
 
 
-    def tokenize_operator(self) -> None:
+    def _tokenize_operator(self) -> None:
+        for length in self._operator_lengths:
+            op = self._input.peek(length)
+            if op in operators:
+                self._output.append(Token(op))
+                return
+        
 
 
 
