@@ -28,3 +28,4 @@ class Peekable:
         if value:
             self._i += count
         return value
+
