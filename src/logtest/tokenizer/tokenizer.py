@@ -1,18 +1,14 @@
 from peekable.peekable import Peekable
-from tokens import Token
-from token_kinds import TokenKind
+from tokenizer.tokens import Token
+from tokenizer.token_kinds import TokenKind
 
 
 operators = {
     "-": TokenKind.Not,
     "&&": TokenKind.And,
-    "AND": TokenKind.And,
     "||": TokenKind.Or,
-    "OR": TokenKind.Or,
     "->": TokenKind.Impl,
-    "IMPLIES": TokenKind.Impl,
     "<->": TokenKind.Iff,
-    "IFF": TokenKind.Iff,
     "=": TokenKind.Assign
 }
 
