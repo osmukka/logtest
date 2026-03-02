@@ -1,5 +1,7 @@
+from logtest.tokenizer.tokenizer import Tokenizer
+
 def main():
-    print("Hello World!")
+    print(Tokenizer().tokenize("-&&||->"))
 
 if __name__ == "__main__":
     main()
