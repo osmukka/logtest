@@ -20,10 +20,16 @@ class Tokenizer:
         self._i = 0
 
 
+    def _items_left(self) -> int:
+        return len(self._input) - self._i
+
+
     def _peek(self, count=1) -> str | None:
         if count < 1:
             raise ValueError("Cannot peek under 1 item")
 
+        if count > self._items_left():
+            return None
         if self._i < len(self._input):
             return self._input[self._i : self._i+count]
         else:
@@ -37,17 +43,16 @@ class Tokenizer:
         return slice
 
 
-    def _tokenizer_identifier(self) -> None:
-        identifier_length = 1
-        while self._peek(identifier_length).isalpha():
-            identifier_length += 1
-        identifier_length -= 1
+    def _tokenize_identifier(self) -> None:
+        identifier = ""
+        while self._peek() and self._peek().isalpha():
+            identifier += self._consume()
+            
 
-        identifier_string = self._consume(identifier_length)
-        if identifier_string in {"True", "False"}:
-            token = Token(TokenKind.TruthVal, identifier_string)
+        if identifier in {"True", "False"}:
+            token = Token(TokenKind.TruthVal, identifier)
         else:
-            token = Token(TokenKind.Prep, identifier_string)
+            token = Token(TokenKind.Prep, identifier)
         self._output.append(token)
 
 
@@ -66,6 +71,8 @@ class Tokenizer:
         self._i = 0
 
         while self._peek():
+            if self._peek() in " \t\n":
+                continue
             if self._peek().isalpha():
                 self._tokenize_identifier()
             else:

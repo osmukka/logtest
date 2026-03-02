@@ -33,4 +33,10 @@ class TestTokenize:
         assert new_tokenizer.tokenize("False") == [Token(TokenKind.TruthVal, "False")]
         assert new_tokenizer.tokenize("test") == [Token(TokenKind.Prep, "test")]
 
+    def test_misc_expressions(self, new_tokenizer):
+        identifier_tokens = new_tokenizer.tokenize("A->B")
+        assert identifier_tokens[0] == Token(TokenKind.Prep, "A")
+        assert identifier_tokens[1] == Token(TokenKind.Impl)
+        assert identifier_tokens[2] == Token(TokenKind.Prep, "B")
+
 
