@@ -1,4 +1,3 @@
-from peekable.peekable import Peekable
 from logtest.tokenizer.tokens import Token
 from logtest.tokenizer.token_kinds import TokenKind
 
@@ -45,7 +44,11 @@ class Tokenizer:
         identifier_length -= 1
 
         identifier_string = self._consume(identifier_length)
-        self._output.append(Token(TokenKind.Prep, identifier_string))
+        if identifier_string in {"True", "False"}:
+            token = Token(TokenKind.TruthVal, identifier_string)
+        else:
+            token = Token(TokenKind.Prep, identifier_string)
+        self._output.append(token)
 
 
 

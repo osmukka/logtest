@@ -28,4 +28,9 @@ class TestTokenize:
         assert operator_tokens[4] == Token(TokenKind.Iff)
         assert operator_tokens[5] == Token(TokenKind.Assign)
 
+    def test_tokenize_identifiers(self, new_tokenizer):
+        assert new_tokenizer.tokenize("True") == [Token(TokenKind.TruthVal, "True")]
+        assert new_tokenizer.tokenize("False") == [Token(TokenKind.TruthVal, "False")]
+        assert new_tokenizer.tokenize("test") == [Token(TokenKind.Prep, "test")]
+
 
