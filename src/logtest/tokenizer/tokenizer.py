@@ -77,6 +77,7 @@ class Tokenizer:
 
         while self._peek():
             if self._peek() in " \t\n":
+                self._consume()
                 continue
             if self._peek().isalpha():
                 self._tokenize_identifier()
