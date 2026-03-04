@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import Any
 
 from logtest.tokenizer.tokens import Token
 from logtest.tokenizer.token_kinds import TokenKind
@@ -32,6 +33,7 @@ truth_tables = {
 }
 
 
+@dataclass
 class AST_Node:
     def __str__(self) -> str:
         pass
@@ -43,7 +45,8 @@ class AST_Node:
         pass
 
 
-class AST_TerminalNode:
+@dataclass
+class AST_TerminalNode(AST_Node):
     value: bool
 
     def __str__(self) -> str:
@@ -56,6 +59,7 @@ class AST_TerminalNode:
         print(depth*"    " + self.__str__())
 
 
+@dataclass
 class AST_BinaryNode(AST_Node):
     left: AST_Node
     op: TokenKind
