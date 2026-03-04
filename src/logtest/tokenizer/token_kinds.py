@@ -9,4 +9,6 @@ class TokenKind(Enum):
     Not = 5
     Impl = 6
     Iff = 7
+    LParen = 8
+    RParen = 9
 
