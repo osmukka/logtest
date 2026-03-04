@@ -12,6 +12,11 @@ operators = {
     "=": TokenKind.Assign
 }
 
+truth_values = {
+    "False": False,
+    "True": True
+}
+
 
 class Tokenizer:
     def __init__(self) -> None:
@@ -50,7 +55,7 @@ class Tokenizer:
             
 
         if identifier in {"True", "False"}:
-            token = Token(TokenKind.TruthVal, identifier)
+            token = Token(TokenKind.TruthVal, truth_values[identifier])
         else:
             token = Token(TokenKind.Prep, identifier)
         self._output.append(token)
