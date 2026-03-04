@@ -80,7 +80,7 @@ class AST_UnaryNode(AST_Node):
 
     def dump(self, depth: int=0) -> None:
         print(depth*"    " + self.__str__())
-        self.operand.dump()
+        self.operand.dump(depth+1)
 
 
 @dataclass

@@ -1,4 +1,4 @@
-from logtest.parser.logtest_ast import AST_Node, AST_TerminalNode, AST_BinaryNode
+from logtest.parser.logtest_ast import AST_Node, AST_TerminalNode, AST_UnaryNode, AST_BinaryNode
 from logtest.tokenizer.tokens import Token
 from logtest.tokenizer.token_kinds import TokenKind
 
@@ -42,11 +42,18 @@ class Parser:
         match t.kind:
             case TokenKind.TruthVal:
                 return AST_TerminalNode(t.value)
+            case TokenKind.Not:
+                operand = self._parse_expression()
+                return AST_UnaryNode(t.kind, operand)
 
 
     def parse(self, tokens: list[Token]) -> AST_Node:
         self._tokens = tokens
         self._i = 0
+        return self._parse_expression()
+
+
+    def _parse_expression(self) -> AST_Node:
         return self._parse_binary_expression()
 
 
