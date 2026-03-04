@@ -2,6 +2,7 @@ from logtest.parser.logtest_ast import AST_Node, AST_TerminalNode, AST_UnaryNode
 from logtest.tokenizer.tokens import Token
 from logtest.tokenizer.token_kinds import TokenKind
 
+
 unary_binding_powers = {
     TokenKind.Not: (0, 9),
     TokenKind.LParen: (0, 0),
@@ -32,11 +33,13 @@ class Parser:
 
         return self._tokens[self._i]
 
+
     def _consume(self) -> Token | None:
         token = self._peek()
         if token:
             self._i += 1
         return token
+
 
     def _reverse(self) -> None:
         if self._i > 0:
