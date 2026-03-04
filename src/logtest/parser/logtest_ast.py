@@ -53,7 +53,7 @@ class AST_TerminalNode(AST_Node):
         return f"TerminalNode({self.value})"
 
     def eval(self) -> bool:
-        return self.value
+        return self
 
     def dump(self, depth: int=0) -> None:
         print(depth*"    " + self.__str__())
