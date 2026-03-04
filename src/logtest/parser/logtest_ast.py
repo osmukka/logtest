@@ -6,6 +6,10 @@ from logtest.tokenizer.token_kinds import TokenKind
 
 
 truth_tables = {
+    TokenKind.Not: {
+        False: True,
+        True: False,
+    },
     TokenKind.Or: {
         (False, False): False,
         (True, False): True,
