@@ -79,7 +79,3 @@ class Tokenizer:
                 self._tokenize_operator()
         return self._output
             
-        
-
-
-
