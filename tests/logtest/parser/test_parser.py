@@ -39,10 +39,31 @@ class TestParser:
         assert ast.left == AST_TerminalNode(True)
         assert ast.right == AST_TerminalNode(False)
 
+        ast = parse("True -> False -> True")
+        assert ast.op is TokenKind.Impl
+        assert ast.right.op is TokenKind.Impl
+        assert ast.right.left == AST_TerminalNode(False)
+        assert ast.right.right == AST_TerminalNode(True)
+
+
     def test_parse_iff(self):
         ast = parse("True <-> False")
         assert ast.op is TokenKind.Iff
         assert ast.left == AST_TerminalNode(True)
         assert ast.right == AST_TerminalNode(False)
+        
+        # Test precedence.
+        ast = parse("True <-> False <-> True")
+        assert ast.op is TokenKind.Iff
+        assert ast.left.op is TokenKind.Iff
+        assert ast.left.left == AST_TerminalNode(True)
+        assert ast.left.right == AST_TerminalNode(False)
+
+    def test_parse_parentheses(self):
+        ast = parse("True<->(False<->True)")
+        assert ast.op is TokenKind.Iff
+        assert ast.right.op is TokenKind.Iff
+        assert ast.right.left == AST_TerminalNode(False)
+        assert ast.right.right == AST_TerminalNode(True)
 
 
