@@ -44,13 +44,13 @@ class AST_Node:
 
 
 class AST_TerminalNode:
-    token: Token
+    value: bool
 
     def __str__(self) -> str:
-        return f"TerminalNode({self.token.value})"
+        return f"TerminalNode({self.value})"
 
     def eval(self) -> bool:
-        return self.token.value
+        return self.value
 
     def dump(self, depth: int=0) -> None:
         print(depth*"    " + self.__str__())
