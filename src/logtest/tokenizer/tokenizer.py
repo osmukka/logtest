@@ -9,7 +9,9 @@ operators = {
     "||": TokenKind.Or,
     "->": TokenKind.Impl,
     "<->": TokenKind.Iff,
-    "=": TokenKind.Assign
+    "=": TokenKind.Assign,
+    "(": TokenKind.LParen,
+    ")": TokenKind.RParen
 }
 
 truth_values = {
