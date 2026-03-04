@@ -14,7 +14,7 @@ operators = {
     ")": TokenKind.RParen
 }
 
-truth_values = {
+booleans = {
     "False": False,
     "True": True
 }
@@ -57,7 +57,7 @@ class Tokenizer:
             
 
         if identifier in {"True", "False"}:
-            token = Token(TokenKind.TruthVal, truth_values[identifier])
+            token = Token(TokenKind.Boolean, booleans[identifier])
         else:
             token = Token(TokenKind.Prep, identifier)
         self._output.append(token)
@@ -86,4 +86,4 @@ class Tokenizer:
             else:
                 self._tokenize_operator()
         return self._output
-            
+

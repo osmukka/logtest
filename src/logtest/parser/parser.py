@@ -53,7 +53,7 @@ class Parser:
     def _nud(self) -> AST_Node | None:
         t = self._consume()
         match t.kind:
-            case TokenKind.TruthVal:
+            case TokenKind.Boolean:
                 return AST_TerminalNode(t.value)
             case TokenKind.Not:
                 operand = self._parse_expression()

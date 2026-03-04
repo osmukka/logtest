@@ -1,7 +1,7 @@
 from enum import Enum
 
 class TokenKind(Enum):
-    TruthVal = 0
+    Boolean = 0
     Assign = 1
     Prep = 2
     And = 3
