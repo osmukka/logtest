@@ -33,10 +33,10 @@ class Parser:
         return self._tokens[self._i]
 
     def _consume(self) -> Token | None:
-        t = self._peek()
-        if t:
+        token = self._peek()
+        if token:
             self._i += 1
-        return t
+        return token
 
     def _reverse(self) -> None:
         if self._i > 0:
@@ -51,13 +51,13 @@ class Parser:
 
 
     def _nud(self) -> AST_Node | None:
-        t = self._consume()
-        match t.kind:
+        token = self._consume()
+        match token.kind:
             case TokenKind.Boolean:
-                return AST_TerminalNode(t.value)
+                return AST_TerminalNode(token.value)
             case TokenKind.Not:
                 operand = self._parse_expression()
-                return AST_UnaryNode(t.kind, operand)
+                return AST_UnaryNode(token.kind, operand)
             case TokenKind.LParen:
                 expression = self._parse_expression()
                 self._expect(TokenKind.RParen)
