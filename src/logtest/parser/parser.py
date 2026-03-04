@@ -3,7 +3,9 @@ from logtest.tokenizer.tokens import Token
 from logtest.tokenizer.token_kinds import TokenKind
 
 unary_binding_powers = {
-    TokenKind.Not: (0, 9)
+    TokenKind.Not: (0, 9),
+    TokenKind.LParen: (0, 0),
+    TokenKind.RParen: (0, 0),
 }
 
 binary_binding_powers = {
@@ -36,8 +38,19 @@ class Parser:
             self._i += 1
         return t
 
+    def _reverse(self) -> None:
+        if self._i > 0:
+            self._i -= 1
 
-    def _nud(self) -> AST_Node:
+
+    def _expect(self, kind: TokenKind) -> None:
+        if self._peek() and self._peek().kind is kind:
+            self._consume()
+        else:
+            raise ValueError(f"Unexpected token while parsing: {self._peek()} at index {self._i}")
+
+
+    def _nud(self) -> AST_Node | None:
         t = self._consume()
         match t.kind:
             case TokenKind.TruthVal:
@@ -45,6 +58,12 @@ class Parser:
             case TokenKind.Not:
                 operand = self._parse_expression()
                 return AST_UnaryNode(t.kind, operand)
+            case TokenKind.LParen:
+                expression = self._parse_expression()
+                self._expect(TokenKind.RParen)
+                return expression
+            case TokenKind.RParen:
+                self._reverse()
 
 
     def parse(self, tokens: list[Token]) -> AST_Node:
