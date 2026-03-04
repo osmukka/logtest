@@ -56,11 +56,31 @@ class AST_TerminalNode(AST_Node):
     def __str__(self) -> str:
         return f"TerminalNode({self.value})"
 
-    def eval(self) -> bool:
+    def eval(self) -> AST_Node:
         return self
 
     def dump(self, depth: int=0) -> None:
         print(depth*"    " + self.__str__())
+
+
+@dataclass
+class AST_UnaryNode(AST_Node):
+    op: TokenKind
+    operand: AST_Node
+
+    def __str__(self):
+        return f"UnaryNode({self.op})"
+
+    def eval(self) -> AST_Node:
+        argument = self.operand.eval().value
+        table = truth_tables[self.op]
+        result = table[argument]
+
+        return AST_TerminalNode(result)
+
+    def dump(self, depth: int=0) -> None:
+        print(depth*"    " + self.__str__())
+        self.operand.dump()
 
 
 @dataclass
