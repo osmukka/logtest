@@ -24,7 +24,7 @@ class TestTokenize:
 
 
     def test_tokenize_identifiers(self, tokenizer):
-        assert tokenizer.tokenize("True")[0] == Token(TokenKind.Boolean, True)
-        assert tokenizer.tokenize("False")[0] == Token(TokenKind.Boolean, False)
-        assert tokenizer.tokenize("test")[0] == Token(TokenKind.Prep, "test")
+        assert tokenizer.tokenize("True")[0] == Token(TokenKind.Identifier, "True")
+        assert tokenizer.tokenize("False")[0] == Token(TokenKind.Identifier, "False")
+        assert tokenizer.tokenize("test")[0] == Token(TokenKind.Identifier, "test")
 

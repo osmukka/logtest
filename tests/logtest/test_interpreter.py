@@ -1,13 +1,14 @@
 import pytest
 
 from logtest.interpreter.interpreter import Interpreter
+from logtest.interpreter.environment import Environment
 from logtest.tokenizer.tokenizer import Tokenizer
 from logtest.parser.parser import Parser
 
 def interpret(string: str):
     tokens = Tokenizer().tokenize(string)
     ast = Parser().parse(tokens)
-    return Interpreter().interpret(ast)
+    return Interpreter(Environment()).interpret(ast)
 
 
 
