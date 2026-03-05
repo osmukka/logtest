@@ -50,7 +50,7 @@ class Parser:
         if self._peek() and self._peek().kind is kind:
             self._consume()
         else:
-            raise ValueError(f"Unexpected token while parsing: {self._peek()} at index {self._i}")
+            raise ValueError(f"Unexpected token while parsing. expected {kind}, found {self._peek()}.")
 
 
     def _nud(self) -> AST_Node | None:
@@ -67,6 +67,8 @@ class Parser:
                 return expression
             case TokenKind.RParen:
                 self._reverse()
+            case _:
+                raise ValueError(f"Unexpected lhs while parsing: {token.kind if token else None}.")
 
 
     def parse(self, tokens: list[Token]) -> AST_Node:
@@ -84,7 +86,7 @@ class Parser:
 
         while True:
             operator = self._peek()
-            if not operator or operator.kind not in binary_binding_powers:
+            if operator.kind not in binary_binding_powers:
                 break
             lbp, rbp = binary_binding_powers[operator.kind]
             if lbp < min_bp:
