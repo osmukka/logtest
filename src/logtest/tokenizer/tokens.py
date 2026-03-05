@@ -5,7 +5,7 @@ from logtest.tokenizer.token_kinds import TokenKind
 @dataclass
 class Token:
     kind: TokenKind
-    value: bool | tuple[str, int] | None = None
+    value: str | tuple[str, int] | None = None
 
     def __str__(self) -> str:
         value = self.value if self.value else ''
