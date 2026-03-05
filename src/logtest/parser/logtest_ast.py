@@ -51,7 +51,7 @@ class AST_Node:
 
 @dataclass
 class AST_TerminalNode(AST_Node):
-    value: bool
+    value: str
 
     def __str__(self) -> str:
         return f"TerminalNode({self.value})"
