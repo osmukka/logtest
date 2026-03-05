@@ -14,11 +14,6 @@ operators = {
     ")": TokenKind.RParen
 }
 
-booleans = {
-    "False": False,
-    "True": True
-}
-
 
 class Tokenizer:
     def __init__(self) -> None:
@@ -54,12 +49,8 @@ class Tokenizer:
         identifier = ""
         while self._peek() and self._peek().isalpha():
             identifier += self._consume()
-            
-
-        if identifier in {"True", "False"}:
-            token = Token(TokenKind.Boolean, booleans[identifier])
-        else:
-            token = Token(TokenKind.Prep, identifier)
+        
+        token = Token(TokenKind.Identifier, identifier)
         self._output.append(token)
 
 
