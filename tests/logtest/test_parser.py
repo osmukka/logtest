@@ -58,3 +58,11 @@ class TestParser:
         assert ast.right.left == AST_TerminalNode(False)
         assert ast.right.right == AST_TerminalNode(True)
 
+    def test_parse_missing_rparen(self):
+        with pytest.raises(ValueError):
+            parse("(")
+
+    def test_parse_wrong_lhs(self):
+        with pytest.raises(ValueError):
+            parse("->->")
+
