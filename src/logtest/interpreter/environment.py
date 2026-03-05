@@ -13,6 +13,7 @@ class Environment:
     def get_variable(self, name: str) -> str:
         if name not in self.variables:
             raise ValueError(f"Variable {name} is not set")
+        return self.variables[name]
 
 
     def set_variable(self, name: str, value: str) -> None:

@@ -3,6 +3,7 @@ from typing import Any
 
 from logtest.tokenizer.tokens import Token
 from logtest.tokenizer.token_kinds import TokenKind
+from logtest.interpreter.environment import Environment
 
 
 truth_tables = {
@@ -42,7 +43,7 @@ class AST_Node:
     def __str__(self) -> str:
         pass
 
-    def eval(self) -> Any:
+    def eval(self, env: Environment) -> Any:
         pass
 
     def dump(self, depth: int=0) -> None:
@@ -51,13 +52,16 @@ class AST_Node:
 
 @dataclass
 class AST_TerminalNode(AST_Node):
-    value: str
+    value: str | bool
 
     def __str__(self) -> str:
         return f"TerminalNode({self.value})"
 
-    def eval(self) -> AST_Node:
-        return self
+    def eval(self, env: Environment) -> AST_Node:
+        if isinstance(self.value, bool):
+            return AST_TerminalNode(self.value)
+        else:
+            return AST_TerminalNode(env.get_variable(self.value))
 
     def dump(self, depth: int=0) -> None:
         print(depth*"    " + self.__str__())
@@ -71,8 +75,8 @@ class AST_UnaryNode(AST_Node):
     def __str__(self):
         return f"UnaryNode({self.op})"
 
-    def eval(self) -> AST_Node:
-        argument = self.operand.eval().value
+    def eval(self, env: Environment) -> AST_Node:
+        argument = self.operand.eval(env).value
         table = truth_tables[self.op]
         result = table[argument]
 
@@ -92,8 +96,8 @@ class AST_BinaryNode(AST_Node):
     def __str__(self) -> str:
         return f"BinaryNode({self.op})"
 
-    def eval(self) -> AST_TerminalNode:
-        arguments = (self.left.eval().value, self.right.eval().value)
+    def eval(self, env: Environment) -> AST_TerminalNode:
+        arguments = (self.left.eval(env).value, self.right.eval(env).value)
         table = truth_tables[self.op]
         result = table[arguments]
 

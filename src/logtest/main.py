@@ -3,8 +3,10 @@ from logtest.tokenizer.token_kinds import TokenKind
 from logtest.tokenizer.tokens import Token
 from logtest.parser.parser import Parser
 from logtest.interpreter.interpreter import Interpreter
+from logtest.interpreter.environment import Environment
 
 def main():
+    interpreter = Interpreter(Environment())
     while True:
         string = input("> ")
 
@@ -27,7 +29,7 @@ def main():
             continue
 
         # Interpret the ast.
-        result = Interpreter().interpret(ast)
+        result = interpreter.interpret(ast)
         print(result)
 
 
