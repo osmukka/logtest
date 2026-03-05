@@ -1,7 +1,35 @@
 from logtest.tokenizer.tokenizer import Tokenizer
+from logtest.tokenizer.token_kinds import TokenKind
+from logtest.tokenizer.tokens import Token
+from logtest.parser.parser import Parser
+from logtest.interpreter.interpreter import Interpreter
 
 def main():
-    print(Tokenizer().tokenize("A->B"))
+    while True:
+        string = input("> ")
+
+        # Tokenize the string.
+        tokens = Tokenizer().tokenize(string)
+        has_error_token = False
+        for token in tokens:
+            if token.kind is TokenKind.Error:
+                value, index = token.value
+                print(f"Unexpected token '{value}' at index {index}")
+                has_error_token = True
+        if has_error_token:
+            continue
+
+        # Generate ast from the list of tokens.
+        try:
+            ast = Parser().parse(tokens)
+        except ValueError as e:
+            print(str(e))
+            continue
+
+        # Interpret the ast.
+        result = Interpreter().interpret(ast)
+        print(result)
+
 
 if __name__ == "__main__":
     main()
