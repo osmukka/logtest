@@ -1,16 +1,15 @@
 from enum import Enum
 
 class TokenKind(Enum):
-    Boolean = 0
+    Identifier = 0
     Assign = 1
-    Prep = 2
-    And = 3
-    Or = 4
-    Not = 5
-    Impl = 6
-    Iff = 7
-    LParen = 8
-    RParen = 9
-    Error = 10
-    EOF = 11
+    And = 2
+    Or = 3
+    Not = 4
+    Impl = 5
+    Iff = 6
+    LParen = 7
+    RParen = 8
+    Error = 9
+    EOF = 10
 
