@@ -25,11 +25,15 @@ def main():
         try:
             ast = Parser().parse(tokens)
         except ValueError as e:
-            print(str(e))
+            print("Parse error", str(e))
             continue
 
         # Interpret the ast.
-        result = interpreter.interpret(ast)
+        try:
+            result = interpreter.interpret(ast)
+        except ValueError as e:
+            print("Interpreter error:", str(e))
+            continue
         print(result)
 
 
