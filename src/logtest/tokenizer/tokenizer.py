@@ -85,5 +85,6 @@ class Tokenizer:
                 self._tokenize_identifier()
             else:
                 self._tokenize_operator()
+        self._output.append(Token(TokenKind.EOF))
         return self._output
 
