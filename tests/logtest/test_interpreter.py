@@ -45,3 +45,7 @@ class TestInterpreter:
         assert interpret("False <-> True") == False
         assert interpret("True <-> True") == True
 
+    def test_accessing_unbound_variable(self):
+        with pytest.raises(ValueError):
+            interpret("a")
+
