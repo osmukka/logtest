@@ -56,7 +56,7 @@ class Parser:
     def _nud(self) -> AST_Node | None:
         token = self._consume()
         match token.kind:
-            case TokenKind.Boolean:
+            case TokenKind.Identifier:
                 return AST_TerminalNode(token.value)
             case TokenKind.Not:
                 operand = self._parse_expression()
