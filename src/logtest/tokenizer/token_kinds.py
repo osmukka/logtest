@@ -11,4 +11,6 @@ class TokenKind(Enum):
     Iff = 7
     LParen = 8
     RParen = 9
+    Error = 10
+    EOF = 11
 
