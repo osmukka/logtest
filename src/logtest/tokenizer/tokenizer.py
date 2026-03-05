@@ -63,21 +63,23 @@ class Tokenizer:
         self._output.append(token)
 
 
-
     def _tokenize_operator(self) -> None:
         for length in range(max_len, 0, -1):
             op = self._peek(length)
             if op in operators:
                 self._consume(length)
                 self._output.append(Token(operators[op]))
-                break
+                return
+
+        self._output.append(Token(TokenKind.Error, (op, self._i)))
+        self._consume(length)
             
     def tokenize(self, chars: str) -> list[Token]:
         self._input = chars
         self._output = []
         self._i = 0
 
-        while self._peek():
+        while self._items_left():
             if self._peek() in " \t\n":
                 self._consume()
                 continue

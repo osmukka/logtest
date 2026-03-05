@@ -12,18 +12,19 @@ def tokenizer():
 
 class TestTokenize:
     def test_tokenize_operators(self, tokenizer):
-        assert tokenizer.tokenize("-") == [Token(TokenKind.Not)]
-        assert tokenizer.tokenize("&&") == [Token(TokenKind.And)]
-        assert tokenizer.tokenize("||") == [Token(TokenKind.Or)]
-        assert tokenizer.tokenize("->") == [Token(TokenKind.Impl)]
-        assert tokenizer.tokenize("<->") == [Token(TokenKind.Iff)]
-        assert tokenizer.tokenize("=") == [Token(TokenKind.Assign)]
-        assert tokenizer.tokenize("(") == [Token(TokenKind.LParen)]
-        assert tokenizer.tokenize(")") == [Token(TokenKind.RParen)]
+        assert tokenizer.tokenize("-")[0] == Token(TokenKind.Not)
+        assert tokenizer.tokenize("&&")[0] == Token(TokenKind.And)
+        assert tokenizer.tokenize("||")[0] == Token(TokenKind.Or)
+        assert tokenizer.tokenize("->")[0] == Token(TokenKind.Impl)
+        assert tokenizer.tokenize("<->")[0] == Token(TokenKind.Iff)
+        assert tokenizer.tokenize("=")[0] == Token(TokenKind.Assign)
+        assert tokenizer.tokenize("(")[0] == Token(TokenKind.LParen)
+        assert tokenizer.tokenize(")")[0] == Token(TokenKind.RParen)
+        assert tokenizer.tokenize("<")[0] == Token(TokenKind.Error, ("<", 0))
 
 
     def test_tokenize_identifiers(self, tokenizer):
-        assert tokenizer.tokenize("True") == [Token(TokenKind.Boolean, True)]
-        assert tokenizer.tokenize("False") == [Token(TokenKind.Boolean, False)]
-        assert tokenizer.tokenize("test") == [Token(TokenKind.Prep, "test")]
+        assert tokenizer.tokenize("True")[0] == Token(TokenKind.Boolean, True)
+        assert tokenizer.tokenize("False")[0] == Token(TokenKind.Boolean, False)
+        assert tokenizer.tokenize("test")[0] == Token(TokenKind.Prep, "test")
 
