@@ -1,6 +1,3 @@
-
-
-
 class Environment:
     def __init__(self) -> None:
         self.invariables = {"True", "False"}
@@ -16,11 +13,11 @@ class Environment:
         return self.variables[name]
 
 
-    def set_variable(self, name: str, value: str) -> None:
+    def set_variable(self, name: str, value: bool) -> None:
         if name in self.invariables:
             raise ValueError("Values of True and False cannot be changed")
 
-        self.variables[name] = self.get_variable(value)
+        self.variables[name] = value
 
 
     def reset_variable(self, name: str) -> None:

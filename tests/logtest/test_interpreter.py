@@ -45,7 +45,28 @@ class TestInterpreter:
         assert interpret("False <-> True") == False
         assert interpret("True <-> True") == True
 
+    def test_setting_variable(self):
+        assert interpret("A=True") == True
+
+    def test_accessing_variable(self):
+        interpreter = Interpreter(Environment())
+        tokens = Tokenizer().tokenize("A=False")
+        ast = Parser().parse(tokens)
+        assert interpreter.interpret(ast) == False
+
+        tokens = Tokenizer().tokenize("A")
+        ast = Parser().parse(tokens)
+        assert interpreter.interpret(ast) == False
+
+
     def test_accessing_unbound_variable(self):
         with pytest.raises(ValueError):
             interpret("a")
+
+    def test_setting_true_and_false(self):
+        with pytest.raises(ValueError):
+            interpret("True=False")
+        with pytest.raises(ValueError):
+            interpret("False=True")
+
 

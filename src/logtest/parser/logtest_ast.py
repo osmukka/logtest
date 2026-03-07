@@ -43,8 +43,10 @@ class AST_Node:
     def __str__(self) -> str:
         pass
 
+
     def eval(self, env: Environment) -> Any:
         pass
+
 
     def dump(self, depth: int=0) -> None:
         pass
@@ -57,11 +59,13 @@ class AST_TerminalNode(AST_Node):
     def __str__(self) -> str:
         return f"TerminalNode({self.value})"
 
+
     def eval(self, env: Environment) -> AST_Node:
         if isinstance(self.value, bool):
             return AST_TerminalNode(self.value)
         else:
             return AST_TerminalNode(env.get_variable(self.value))
+
 
     def dump(self, depth: int=0) -> None:
         print(depth*"    " + self.__str__())
@@ -75,12 +79,14 @@ class AST_UnaryNode(AST_Node):
     def __str__(self):
         return f"UnaryNode({self.op})"
 
+
     def eval(self, env: Environment) -> AST_Node:
         argument = self.operand.eval(env).value
         table = truth_tables[self.op]
         result = table[argument]
 
         return AST_TerminalNode(result)
+
 
     def dump(self, depth: int=0) -> None:
         print(depth*"    " + self.__str__())
@@ -92,14 +98,15 @@ class AST_BinaryNode(AST_Node):
     left: AST_Node
     op: TokenKind
     right: AST_Node
-    
+
     def __str__(self) -> str:
         return f"BinaryNode({self.op})"
+
 
     def eval(self, env: Environment) -> AST_TerminalNode:
         # Handle variable assignment separately.
         if self.op is TokenKind.Assign:
-            self.right.eval(env)
+            self.right = self.right.eval(env)
             return self
 
         arguments = (self.left.eval(env).value, self.right.eval(env).value)
@@ -108,13 +115,9 @@ class AST_BinaryNode(AST_Node):
 
         return AST_TerminalNode(result)
 
+
     def dump(self, depth: int=0) -> None:
         print(depth*"    " + self.__str__())
         self.left.dump(depth+1)
         self.right.dump(depth+1)
-
-
-
-
-
 

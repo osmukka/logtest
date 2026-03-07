@@ -10,6 +10,7 @@ unary_binding_powers = {
 }
 
 binary_binding_powers = {
+    TokenKind.Assign: (0, 0),
     TokenKind.Or: (1, 2),
     TokenKind.And: (3, 4),
     TokenKind.Impl: (6, 5),
