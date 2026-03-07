@@ -97,6 +97,11 @@ class AST_BinaryNode(AST_Node):
         return f"BinaryNode({self.op})"
 
     def eval(self, env: Environment) -> AST_TerminalNode:
+        # Handle variable assignment separately.
+        if self.op is TokenKind.Assign:
+            self.right.eval(env)
+            return self
+
         arguments = (self.left.eval(env).value, self.right.eval(env).value)
         table = truth_tables[self.op]
         result = table[arguments]
