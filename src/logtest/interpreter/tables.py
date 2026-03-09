@@ -1,33 +1,34 @@
 from logtest.tokenizer.token_kinds import TokenKind
+from logtest.interpreter.primitives import Primitive
 
 truth_tables = {
     TokenKind.Not: {
-        False: True,
-        True: False,
+        Primitive.false: Primitive.true,
+        Primitive.true: Primitive.false,
     },
     TokenKind.Or: {
-        (False, False): False,
-        (True, False): True,
-        (False, True): True,
-        (True, True): True,
+        (Primitive.false, Primitive.false): Primitive.false,
+        (Primitive.true, Primitive.false): Primitive.true,
+        (Primitive.false, Primitive.true): Primitive.true,
+        (Primitive.true, Primitive.true): Primitive.true,
     },
     TokenKind.And: {
-        (False, False): False,
-        (True, False): False,
-        (False, True): False,
-        (True, True): True,
+        (Primitive.false, Primitive.false): Primitive.false,
+        (Primitive.true, Primitive.false): Primitive.false,
+        (Primitive.false, Primitive.true): Primitive.false,
+        (Primitive.true, Primitive.true): Primitive.true,
     },
     TokenKind.Impl: {
-        (False, False): True,
-        (True, False): False,
-        (False, True): True,
-        (True, True): True,
+        (Primitive.false, Primitive.false): Primitive.true,
+        (Primitive.true, Primitive.false): Primitive.false,
+        (Primitive.false, Primitive.true): Primitive.true,
+        (Primitive.true, Primitive.true): Primitive.true,
     },
     TokenKind.Iff: {
-        (False, False): False,
-        (True, False): False,
-        (False, True): False,
-        (True, True): True,
+        (Primitive.false, Primitive.false): Primitive.false,
+        (Primitive.true, Primitive.false): Primitive.false,
+        (Primitive.false, Primitive.true): Primitive.false,
+        (Primitive.true, Primitive.true): Primitive.true,
     }
 }
 
